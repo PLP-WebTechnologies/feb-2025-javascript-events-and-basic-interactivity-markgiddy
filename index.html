@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Webpage</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Button Styles */
+        #changeButton {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #changeButton:hover {
+            background-color: #0056b3;
+        }
+
+        /* Image Gallery Styles */
+        #gallery-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .gallery-image {
+            width: 150px;
+            height: auto;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .gallery-image:hover {
+            opacity: 0.8;
+        }
+
+        /* Tabs Styles */
+        .tab-container {
+            width: 300px;
+            border: 1px solid #ccc;
+        }
+
+        .tab-buttons {
+            display: flex;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background-color: #f0f0f0;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .tab-button.active {
+            background-color: #ddd;
+        }
+
+        .tab-content {
+            padding: 15px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Form Styles */
+        #validationForm {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 3px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1e7e34;
+        }
+
+        /* Animation */
+        .animated-element {
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            border-radius: 50%;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Interactive Elements & Event Handling</h1>
+
+    <button id="changeButton">Click Me!</button>
+
+    <h2>Image Gallery</h2>
+    <div id="gallery-container">
+        <img src="https://images.pexels.com/photos/1002703/pexels-photo-1002703.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 1" class="gallery-image" data-index="0">
+        <img src="https://images.pexels.com/photos/1042423/pexels-photo-1042423.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 2" class="gallery-image" data-index="1">
+        <img src="https://images.pexels.com/photos/1262803/pexels-photo-1262803.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="gallery-image" data-index="2">
+    </div>
+    </div>
+    <p id="gallery-message"></p>
+
+    <h2>Tabs Content</h2>
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="tab1">Tab 1</button>
+            <button class="tab-button" data-tab="tab2">Tab 2</button>
+            <button class="tab-button" data-tab="tab3">Tab 3</button>
+        </div>
+        <div id="tab1" class="tab-content active">Content for Tab 1.</div>
+        <div id="tab2" class="tab-content">Content for Tab 2.</div>
+        <div id="tab3" class="tab-content">Content for Tab 3.</div>
+    </div>
+
+    <h2>Form Validation</h2>
+    <form id="validationForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            <p class="error-message" id="nameError"></p>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <p class="error-message" id="emailError"></p>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <p class="error-message" id="passwordError"></p>
+        </div>
+        <button type="submit">Submit</button>
+        <p id="formMessage"></p>
+    </form>
+
+    <h2>Bonus: Animation</h2>
+    <div class="animated-element"></div>
+
+    <script>
+        const changeButton = document.getElementById('changeButton');
+        const galleryContainer = document.getElementById('gallery-container');
+        const galleryMessage = document.getElementById('gallery-message');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const validationForm = document.getElementById('validationForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const formMessage = document.getElementById('formMessage');
+        let buttonClickCount = 0;
+        let lastClickTime = 0;
+        let longPressTimer;
+        const longPressDelay = 1000; // 1 second
+
+        // 1. Event Handling
+        // Button click
+        changeButton.addEventListener('click', () => {
+            buttonClickCount++;
+            if (buttonClickCount % 2 === 0) {
+                changeButton.textContent = 'Clicked Again!';
+                changeButton.style.backgroundColor = '#28a745';
+            } else {
+                changeButton.textContent = 'Click Me!';
+                changeButton.style.backgroundColor = '#007bff';
+            }
+        });
+
+        // Hover effects
+        changeButton.addEventListener('mouseover', () => {
+            changeButton.style.boxShadow = '2px 2px 5px rgba(0, 0, 0, 0.3)';
+        });
+
+        changeButton.addEventListener('mouseout', () => {
+            changeButton.style.boxShadow = 'none';
+        });
+
+        // Keypress detection (applied to the whole document for simplicity)
+        document.addEventListener('keypress', (event) => {
+            console.log(`Key pressed: ${event.key}`);
+            galleryMessage.textContent = `Last key pressed: ${event.key}`;
+        });
+
+        // Bonus: Double-click
+        changeButton.addEventListener('dblclick', () => {
+            alert('Double-click detected! Secret action triggered.');
+        });
+
+        // Bonus: Long press (using mousedown and mouseup)
+        changeButton.addEventListener('mousedown', () => {
+            longPressTimer = setTimeout(() => {
+                alert('Long press detected! Another secret action!');
+            }, longPressDelay);
+        });
+
+        changeButton.addEventListener('mouseup', () => {
+            clearTimeout(longPressTimer);
+        });
+
+        changeButton.addEventListener('mouseleave', () => {
+            clearTimeout(longPressTimer);
+        });
+
+        // 2. Interactive Elements
+        // Image gallery interaction
+        galleryContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('gallery-image')) {
+                const index = event.target.dataset.index;
+                galleryMessage.textContent = `Image ${parseInt(index) + 1} clicked.`;
+            }
+        });
+
+        // Tabs functionality
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+
+                // Deactivate all tabs and content
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Activate the clicked tab and its content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // 3. Form Validation
+        validationForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+            validateForm();
+        });
+
+        nameInput.addEventListener('input', () => {
+            validateName();
+        });
+
+        emailInput.addEventListener('input', () => {
+            validateEmail();
+        });
+
+        passwordInput.addEventListener('input', () => {
+            validatePassword();
+        });
+
+        function validateName() {
+            if (!nameInput.value.trim()) {
+                nameError.textContent = 'Name is required.';
+                return false;
+            } else {
+                nameError.textContent = '';
+                return true;
+            }
+        }
+
+        function validateEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailInput.value.trim()) {
+                emailError.textContent = 'Email is required.';
+                return false;
+            } else if (!emailRegex.test(emailInput.value)) {
+                emailError.textContent = 'Invalid email format.';
+                return false;
+            } else {
+                emailError.textContent = '';
+                return true;
+            }
+        }
+
+        function validatePassword() {
+            if (!passwordInput.value) {
+                passwordError.textContent = 'Password is required.';
+                return false;
+            } else if (passwordInput.value.length < 8) {
+                passwordError.textContent = 'Password must be at least 8 characters long.';
+                return false;
+            } else {
+                passwordError.textContent = '';
+                return true;
+            }
+        }
+
+        function validateForm() {
+            const isNameValid = validateName();
+            const isEmailValid = validateEmail();
+            const isPasswordValid = validatePassword();
+
+            if (isNameValid && isEmailValid && isPasswordValid) {
+                formMessage.textContent = 'Form submitted successfully!';
+                formMessage.style.color = 'green';
+                validationForm.reset();
+            } else {
+                formMessage.textContent = 'Please correct the errors in the form.';
+                formMessage.style.color = 'red';
+            }
+        }
+    </script>
+
+</body>
+</html>
